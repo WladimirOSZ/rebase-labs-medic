@@ -1,5 +1,3 @@
-console.log("impoirtou");
-
 const fragment = new DocumentFragment();
 const api = "http://127.0.0.1:3000/api/v1/";
 let saved_data = null;
@@ -32,17 +30,13 @@ function getExamData(exam_id) {
 }
 
 function addLoading(element){
-  console.log('adicionando loading');
   element.classList.remove('hidden')
   element.classList.add('block');
-  console.log(element.classList);
 }
 
 function removeLoading(element){
-  console.log('removendo loading');
   element.classList.remove('block')
   element.classList.add('hidden');
-  console.log(element.classList);
 }
 
 function displayPatientData(data) {
@@ -146,4 +140,29 @@ function search(){
   });
 
   displayData(filteredData);
+}
+
+
+function uploadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch(api+'async_import', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  } else {
+    console.error('No file selected');
+  }
 }

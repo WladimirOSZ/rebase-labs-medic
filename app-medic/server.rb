@@ -3,6 +3,7 @@ require 'rack/handler/puma'
 require 'csv'
 require_relative 'database'
 require_relative './controllers/api/v1/exams_controller'
+require_relative './enqueuer'
 
 
 get '/genres' do
@@ -31,6 +32,14 @@ end
 
 get '/import' do
   require './import_from_csv.rb'
+end
+
+post '/api/v1/async_import' do
+  response.headers['Access-Control-Allow-Origin'] = '*'
+  response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+  csv_content = params[:file][:tempfile].read.force_encoding("UTF-8")
+  Enqueuer.enqueue(csv_content)
+  puts 'entrou na rota'
 end
 
 get '/exams' do

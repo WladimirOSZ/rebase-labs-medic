@@ -6,7 +6,9 @@ services:
     volumes:
       - .:/app
       - labs-gems:/usr/local/bundle
-    command: bash -c "cd medic-app/;bundle install && ruby server.rb"
+    command: bash -c "cd app-medic/;bundle install && ruby server.rb"
+    environment: 
+      REDIS_URL: redis://redis:6379/0
     ports:
       - "3000:3000"
     depends_on:
@@ -17,5 +19,18 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./database:/var/lib/postgresql/data
+  sidekiq:
+    image: ruby
+    working_dir: /app
+    volumes:
+      - .:/app
+      - labs-gems:/usr/local/bundle
+    command: bash -c "cd app-medic/;bundle exec sidekiq -r ./csv_importer.rb"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - redis
+  redis:
+    image: redis
 volumes:
   labs-gems:

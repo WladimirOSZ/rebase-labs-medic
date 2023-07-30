@@ -28,6 +28,18 @@
           LABS
         </a>
       </div>
+      <form id="uploadForm" method="post" enctype="multipart/form-data" class="form-inline my-2 my-lg-0 mr-auto me-2">
+        <div class="join">
+          <div>
+            <div>
+              <input type="file" id="fileInput" class="file-input file-input-bordered w-full max-w-xs join-item md:w-auto" />
+            </div>
+          </div>
+          <div class="indicator">
+            <button type="button" onclick="uploadFile()" class="btn join-item">Enviar</button>
+          </div>
+        </div>
+      </form>
       <div class="flex-none gap-2">
         <div class="join">
           <div>

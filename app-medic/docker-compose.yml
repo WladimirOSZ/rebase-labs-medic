@@ -17,5 +17,18 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./database:/var/lib/postgresql/data
+  sidekiq:
+    image: ruby
+    working_dir: /app
+    volumes:
+      - .:/app
+      - labs-gems:/usr/local/bundle
+    command: bash -c "bundle exec sidekiq -r ./app/worker.rb"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - redis
+  redis:
+    image: redis
 volumes:
   labs-gems:
