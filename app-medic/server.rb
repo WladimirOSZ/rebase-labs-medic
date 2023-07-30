@@ -39,11 +39,7 @@ post '/api/v1/async_import' do
   response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
   csv_content = params[:file][:tempfile].read.force_encoding("UTF-8")
   Enqueuer.enqueue(csv_content)
-  puts 'entrou na rota'
-end
-
-get '/exams' do
-  require '..rb'
+  { status: 'ok' }.to_json
 end
 
 get '/api/v1/exams' do

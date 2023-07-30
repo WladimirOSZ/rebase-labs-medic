@@ -2,11 +2,11 @@ version: '3.9'
 services:
   web:
     image: ruby
-    working_dir: /app
+    working_dir: /app/app-medic
     volumes:
-      - .:/app
+      - ./app-medic:/app/app-medic
       - labs-gems:/usr/local/bundle
-    command: bash -c "cd app-medic/;bundle install && ruby server.rb"
+    command: bash -c "bundle install && ruby server.rb"
     environment: 
       REDIS_URL: redis://redis:6379/0
     ports:
@@ -21,16 +21,26 @@ services:
       - ./database:/var/lib/postgresql/data
   sidekiq:
     image: ruby
-    working_dir: /app
+    working_dir: /app/app-medic
     volumes:
-      - .:/app
+      - ./app-medic:/app/app-medic
       - labs-gems:/usr/local/bundle
-    command: bash -c "cd app-medic/;bundle exec sidekiq -r ./csv_importer.rb"
+    command: bash -c "bundle install && bundle exec sidekiq -r ./csv_importer.rb"
     environment:
       REDIS_URL: redis://redis:6379/0
     depends_on:
       - redis
   redis:
     image: redis
+  frontend:
+    image: node
+    working_dir: /app/frontend
+    volumes:
+      - ./frontend:/app/frontend
+    command: bash -c "npm install && npm run dev"
+    ports:
+      - "5500:5500"
+    depends_on:
+      - web
 volumes:
   labs-gems:

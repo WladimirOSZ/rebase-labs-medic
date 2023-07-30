@@ -4,14 +4,13 @@ require 'rack'
 class ExamsController < Database
   def index
     conn = Database.connect
-
+    
     res = conn.exec(' SELECT exams.date, exams.id AS exam_id, exams.token,
                       patients.cpf, patients.name AS patient_name, patients.birthdate AS patient_birthdate,
                       doctors.name AS doctor_name
                       FROM exams
                       INNER JOIN patients ON exams.patient_id = patients.id
                       INNER JOIN doctors ON exams.doctor_id = doctors.id')
-
 
     conn.close
 
