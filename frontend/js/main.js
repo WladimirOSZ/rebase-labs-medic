@@ -131,7 +131,7 @@ function autoSearch(){
 }
 
 function search(){
-  const searchInput = document.getElementById('search-input').value.toLowerCase();
+  const searchInput = document.getElementById('search-input').value.toLowerCase().trim();
   
   const filteredData = saved_data.filter((item) => {
     const nameMatch = item.patient_name.toLowerCase().includes(searchInput);
