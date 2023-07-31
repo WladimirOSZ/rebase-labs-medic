@@ -27,8 +27,6 @@ get '/tests' do
   res.to_a.to_json
 end
 
-
-
 get '/import' do
   require './import_from_csv.rb'
 end
