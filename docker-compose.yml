@@ -13,12 +13,35 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
+      - sidekiq
   db:
     image: postgres
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./database:/var/lib/postgresql/data
+  test:
+    image: ruby
+    working_dir: /app/app-medic
+    volumes:
+      - ./app-medic:/app/app-medic
+      - labs-gems:/usr/local/bundle
+    command: bash -c "bundle install && bundle exec rspec"
+    environment:
+      - RACK_ENV=test
+    depends_on:
+      - db-test
+    networks:
+      - tests
+  db-test:
+    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    networks:
+      tests:
+        aliases:
+          - db
   sidekiq:
     image: ruby
     working_dir: /app/app-medic
@@ -44,3 +67,5 @@ services:
       - web
 volumes:
   labs-gems:
+networks:
+  tests:

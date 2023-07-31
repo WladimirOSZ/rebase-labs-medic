@@ -4,3 +4,8 @@ gem 'sinatra'
 gem 'puma'
 gem 'pg'
 gem 'sidekiq'
+
+group :development, :test do
+    gem 'rspec'
+    gem 'capybara'
+end

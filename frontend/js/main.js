@@ -2,16 +2,18 @@ const fragment = new DocumentFragment();
 const api = "http://127.0.0.1:3000/api/v1/";
 let saved_data = null;
 
-fetch(api + "exams")
-  .then((response) => response.json())
-  .then((data) => {
-    saved_data = data;
+document.addEventListener('DOMContentLoaded', function() {
+  fetch(api + "exams")
+    .then((response) => response.json())
+    .then((data) => {
+      saved_data = data;
 
-    displayData(data);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+      displayData(data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+});
 
 function getExamData(exam_id) {
   modal = document.getElementById("modal");

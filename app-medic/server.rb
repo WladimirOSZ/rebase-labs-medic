@@ -5,7 +5,6 @@ require_relative 'database'
 require_relative './controllers/api/v1/exams_controller'
 require_relative './enqueuer'
 
-
 get '/genres' do
   File.open('genres.html')
 end
