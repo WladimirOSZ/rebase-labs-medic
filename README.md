@@ -2,7 +2,7 @@
 
 Projeto desenvolvido para o Rebase Labs.
 
-A proposta da aplicação é lidar com dados médicos usando Ruby, processamento assíncrono e desenvolver uma API.
+Aplicação de dados médicos usando Ruby com Sinatra, processamento assíncrono e desenvolvendo API.
 
 ## Tecnologias Utilizadas
 
@@ -45,5 +45,6 @@ docker-compose run test
 Para acessar o frontend da aplicação, é necessário abrir a pasta frontend e abrir o arquivo o index.html
 
 ## Banco de dados
-
+Diagrama:
+![DIAGRAM](https://github.com/WladimirOSZ/rebase-labs-medic/assets/61012948/ae446070-efc2-4bb9-b506-321074a9c57c)
 
